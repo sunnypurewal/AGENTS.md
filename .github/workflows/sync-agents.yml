@@ -1,0 +1,36 @@
+name: Sync Agents
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Sync AGENTS.md to vendor
+        run: |
+          mkdir -p vendor
+          if [ -z "$(ls -A vendor)" ]; then
+            echo "Vendor folder is empty, creating GEMINI.md and CLAUDE.md"
+            cp AGENTS.md vendor/GEMINI.md
+            cp AGENTS.md vendor/CLAUDE.md
+          else
+            echo "Overwriting existing files in vendor folder"
+            for file in vendor/*; do
+              if [ -f "$file" ]; then
+                cp AGENTS.md "$file"
+              fi
+            done
+          fi
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Sync AGENTS.md to vendor folder"
