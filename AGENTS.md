@@ -6,7 +6,6 @@ Then leave a blank line and include every prompt given since the last git commit
 prefix the prompt with PROMPT: 
 
 follow SOLID software development principles.
-
 prefer many small files over few large files
 
 never run build or test commands unless explicitly told to do so
