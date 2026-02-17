@@ -14,8 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Sync AGENTS.md to vendor
+      - name: Sync AGENTS.md to vendor and README
         run: |
+          cp AGENTS.md README.md
           mkdir -p vendor
           if [ -z "$(ls -A vendor)" ]; then
             echo "Vendor folder is empty, creating GEMINI.md and CLAUDE.md"
@@ -33,4 +34,4 @@ jobs:
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Sync AGENTS.md to vendor folder"
+          commit_message: "Sync AGENTS.md to vendor folder and README.md"
